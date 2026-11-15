@@ -54,3 +54,7 @@ Models, attachments, voice, the side pane, usage, settings, and the command line
 ## Credits
 
 Made by [desmondknunoo](https://github.com/desmondknunoo). Built on [OpenCode](https://opencode.ai).
+
+## License
+
+MIT, the same license as OpenCode. See [LICENSE](LICENSE).
