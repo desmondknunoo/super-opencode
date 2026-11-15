@@ -1,0 +1,4 @@
+# The speech engine (whisper.cpp) otherwise compiles for the build machine's exact CPU, and a
+# release built that way can crash on computers without the same instructions.
+[env]
+GGML_NATIVE = "OFF"
