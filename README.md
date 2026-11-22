@@ -48,6 +48,10 @@ MACOSX_DEPLOYMENT_TARGET=12.0 cargo build --release --locked
 scripts/package-macos.sh target/release/super-opencode
 ```
 
+For complete native macOS, Windows, and Linux packaging instructions, including
+the commands that produce `.dmg`, `.exe`, and `.deb` files, see
+[Building installers](docs/building-installers.md).
+
 ## Guide
 
 Models, attachments, voice, the side pane, usage, settings, and the command line are covered in [the guide](docs/guide.md).
