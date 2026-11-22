@@ -21,6 +21,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     env:
       MACOSX_DEPLOYMENT_TARGET: "12.0"
+      APP_VERSION: ${{ github.ref_type == 'tag' && github.ref_name || '0.2.0' }}
     steps:
       - uses: actions/checkout@v4
       - run: rustup toolchain install 1.99.1 --profile minimal --target ${{ matrix.target }}
@@ -32,21 +33,55 @@ jobs:
         shell: bash
         run: |
           scripts/package-macos.sh target/${{ matrix.target }}/release/super-opencode dist
-          ditto -c -k --sequesterRsrc --keepParent "dist/Super OpenCode.app" "dist/Super-OpenCode-${{ matrix.name }}.zip"
+          hdiutil create -volname "Super OpenCode" -srcfolder "dist/Super OpenCode.app" -ov -format UDZO "dist/Super-OpenCode-${{ matrix.name }}.dmg"
       - if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          New-Item -ItemType Directory dist
-          Compress-Archive -Path 'target/${{ matrix.target }}/release/super-opencode.exe', README.md -DestinationPath 'dist/Super-OpenCode-${{ matrix.name }}.zip'
+          New-Item -ItemType Directory -Force dist/stage | Out-Null
+          Copy-Item target/${{ matrix.target }}/release/super-opencode.exe dist/stage/
+          Copy-Item README.md dist/stage/
+          $root = (Get-Location).Path
+          makensis `
+            "/DSTAGE_DIR=$root\dist\stage" `
+            "/DOUTFILE=$root\dist\Super-OpenCode-${{ matrix.name }}.exe" `
+            "/DAPP_VERSION=$env:APP_VERSION" `
+            scripts/installer.nsi
       - if: runner.os == 'Linux'
         shell: bash
         run: |
-          mkdir -p dist
-          tar -czf "dist/Super-OpenCode-${{ matrix.name }}.tar.gz" -C "target/${{ matrix.target }}/release" super-opencode -C "$GITHUB_WORKSPACE" README.md
+          version="${APP_VERSION#v}"
+          [[ "$version" =~ ^[0-9] ]] || version="0.2.0"
+          scripts/package-linux-deb.sh "target/${{ matrix.target }}/release/super-opencode" "$version" "dist/Super-OpenCode-${{ matrix.name }}.deb"
       - uses: actions/upload-artifact@v4
         with:
           name: Super-OpenCode-${{ matrix.name }}
           path: |
-            dist/*.zip
-            dist/*.tar.gz
+            dist/*.dmg
+            dist/*.exe
+            dist/*.deb
           if-no-files-found: error
+
+  release:
+    name: Publish release
+    needs: build
+    if: github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: Super-OpenCode-*
+          path: dist
+          merge-multiple: true
+      - name: Generate checksums
+        run: cd dist && sha256sum *.dmg *.exe *.deb > SHA256SUMS.txt
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.dmg
+            dist/*.exe
+            dist/*.deb
+            dist/SHA256SUMS.txt
+          generate_release_notes: true
+          fail_on_unmatched_files: true

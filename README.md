@@ -27,9 +27,10 @@ A desktop app for [OpenCode](https://opencode.ai), the open-source coding agent,
 
 ## Get started
 
-1. Build the app (below), or run the **Desktop builds** workflow under **Actions** to get archives for macOS, Windows, and Linux.
-2. Open it. If OpenCode isn't installed, the app installs it with OpenCode's own installer, and a short tutorial covers the rest.
-3. Choose a project folder, describe a task, and press Return.
+1. Download the installer for your platform from the [latest release](https://github.com/desmondknunoo/super-opencode/releases/latest): `Super-OpenCode-macos-arm64.dmg`, `Super-OpenCode-macos-x64.dmg`, `Super-OpenCode-windows-x64.exe`, or `Super-OpenCode-linux-x64.deb`.
+2. Install it: drag the app from the DMG to Applications on macOS, run the `.exe` on Windows, or run `sudo apt install ./Super-OpenCode-linux-x64.deb` on Debian/Ubuntu.
+3. Open it. If OpenCode isn't installed, the app installs it with OpenCode's own installer, and a short tutorial covers the rest.
+4. Choose a project folder, describe a task, and press Return.
 
 ## Build
 
