@@ -27,6 +27,7 @@ UninstPage instfiles
 Section "Super OpenCode"
   SetOutPath "$INSTDIR"
   File "${STAGE_DIR}\super-opencode.exe"
+  File "${STAGE_DIR}\WebView2Loader.dll"
   File "${STAGE_DIR}\README.md"
 
   CreateDirectory "$SMPROGRAMS\Super OpenCode"
@@ -39,6 +40,7 @@ SectionEnd
 
 Section "Uninstall"
   Delete "$INSTDIR\super-opencode.exe"
+  Delete "$INSTDIR\WebView2Loader.dll"
   Delete "$INSTDIR\README.md"
   Delete "$INSTDIR\uninstall.exe"
   Delete "$SMPROGRAMS\Super OpenCode\Super OpenCode.lnk"
