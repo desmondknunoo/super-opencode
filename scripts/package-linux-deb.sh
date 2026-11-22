@@ -11,10 +11,11 @@ arch=$(dpkg --print-architecture)
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 pkg="$work/super-opencode"
-mkdir -p "$pkg/DEBIAN" "$pkg/usr/bin" "$pkg/usr/share/applications" "$pkg/usr/share/pixmaps"
+mkdir -p "$pkg/DEBIAN" "$pkg/usr/bin" "$pkg/usr/share/applications" "$pkg/usr/share/pixmaps" "$pkg/usr/share/icons/hicolor/256x256/apps"
 
 install -m 755 "$binary" "$pkg/usr/bin/super-opencode"
-install -m 644 "$project/assets/logo.png" "$pkg/usr/share/pixmaps/super-opencode.png"
+install -m 644 "$project/assets/AppIcon.png" "$pkg/usr/share/icons/hicolor/256x256/apps/super-opencode.png"
+install -m 644 "$project/assets/AppIcon.png" "$pkg/usr/share/pixmaps/super-opencode.png"
 
 cat > "$pkg/usr/share/applications/super-opencode.desktop" <<'DESKTOP'
 [Desktop Entry]

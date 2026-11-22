@@ -43,6 +43,7 @@ jobs:
           $loader = Get-ChildItem "$env:USERPROFILE\.cargo\registry\src" -Filter WebView2Loader.dll -Recurse | Where-Object { $_.FullName -match '[\\/]x64[\\/]WebView2Loader\.dll$' } | Select-Object -First 1
           if (-not $loader) { throw "WebView2Loader.dll (x64) was not found in the Cargo registry" }
           Copy-Item $loader.FullName dist/stage/WebView2Loader.dll
+          Copy-Item assets/AppIcon.ico dist/stage/
           $root = (Get-Location).Path
           makensis `
             "/DSTAGE_DIR=$root\dist\stage" `

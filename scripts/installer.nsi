@@ -13,6 +13,8 @@
 
 Name "Super OpenCode ${APP_VERSION}"
 OutFile "${OUTFILE}"
+Icon "${STAGE_DIR}\AppIcon.ico"
+UninstallIcon "${STAGE_DIR}\AppIcon.ico"
 InstallDir "$LOCALAPPDATA\Programs\Super OpenCode"
 InstallDirRegKey HKCU "Software\Super OpenCode" "InstallDir"
 RequestExecutionLevel user
@@ -28,11 +30,12 @@ Section "Super OpenCode"
   SetOutPath "$INSTDIR"
   File "${STAGE_DIR}\super-opencode.exe"
   File "${STAGE_DIR}\WebView2Loader.dll"
+  File "${STAGE_DIR}\AppIcon.ico"
   File "${STAGE_DIR}\README.md"
 
   CreateDirectory "$SMPROGRAMS\Super OpenCode"
-  CreateShortcut "$SMPROGRAMS\Super OpenCode\Super OpenCode.lnk" "$INSTDIR\super-opencode.exe"
-  CreateShortcut "$SMPROGRAMS\Super OpenCode\Uninstall Super OpenCode.lnk" "$INSTDIR\uninstall.exe"
+  CreateShortcut "$SMPROGRAMS\Super OpenCode\Super OpenCode.lnk" "$INSTDIR\super-opencode.exe" "" "$INSTDIR\AppIcon.ico"
+  CreateShortcut "$SMPROGRAMS\Super OpenCode\Uninstall Super OpenCode.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\AppIcon.ico"
 
   WriteRegStr HKCU "Software\Super OpenCode" "InstallDir" "$INSTDIR"
   WriteUninstaller "$INSTDIR\uninstall.exe"
@@ -41,6 +44,7 @@ SectionEnd
 Section "Uninstall"
   Delete "$INSTDIR\super-opencode.exe"
   Delete "$INSTDIR\WebView2Loader.dll"
+  Delete "$INSTDIR\AppIcon.ico"
   Delete "$INSTDIR\README.md"
   Delete "$INSTDIR\uninstall.exe"
   Delete "$SMPROGRAMS\Super OpenCode\Super OpenCode.lnk"
