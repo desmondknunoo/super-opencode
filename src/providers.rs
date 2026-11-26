@@ -67,6 +67,83 @@ pub const CONNECTABLE: &[Connectable] = &[
         key_page: "https://huggingface.co/settings/tokens",
         note: "Create an access token with permission to make calls to Inference Providers. Free use is limited by monthly credits.",
     },
+    Connectable {
+        id: "kilo",
+        name: "Kilo Code",
+        models: "Nemotron 3.5 Lightning and Super VL, Nemotron 3 Ultra, Nemotron 3 Nano Omni, ERNIE 5.5 Flash, Beam 1.0, Dots3 Note, and Particle-1",
+        key_page: "https://app.kilo.ai/profile",
+        note: "Create a key in your Kilo Code account. Only models priced at $0 are offered, and the free tier allows a limited number of requests an hour.",
+    },
+    Connectable {
+        id: "agnes",
+        name: "Agnes AI",
+        models: "Agnes 2.5 Flash and Agnes 3.0 Flash",
+        key_page: "https://platform.agnes-ai.com/settings/apiKeys",
+        note: "Create an API key in the Agnes AI console. Only the Flash models are free.",
+    },
+    Connectable {
+        id: "cohere",
+        name: "Cohere",
+        models: "North Mini Code",
+        key_page: "https://dashboard.cohere.com/api-keys",
+        note: "Create a trial key in the Cohere dashboard. Only North Mini Code is free.",
+    },
+    Connectable {
+        id: "groq",
+        name: "Groq",
+        models: "No models priced $0 in OpenCode's catalog today",
+        key_page: "https://console.groq.com/keys",
+        note: "Groq has a free tier, but OpenCode prices all its models above $0 today, so connecting adds no models yet.",
+    },
+    Connectable {
+        id: "mistral",
+        name: "Mistral",
+        models: "No models priced $0 in OpenCode's catalog today",
+        key_page: "https://console.mistral.ai/api-keys",
+        note: "Mistral's free labs models are marked deprecated in OpenCode's catalog, so connecting adds no models today.",
+    },
+    Connectable {
+        id: "cloudflare-workers-ai",
+        name: "Cloudflare Workers AI",
+        models: "No models priced $0 in OpenCode's catalog today",
+        key_page: "https://dash.cloudflare.com/profile/api-tokens",
+        note: "Create an API token in the Cloudflare dashboard with Workers AI permission. OpenCode prices all its Workers AI models above $0 today.",
+    },
+    Connectable {
+        id: "ovhcloud",
+        name: "OVHcloud AI Endpoints",
+        models: "No models priced $0 in OpenCode's catalog today",
+        key_page: "https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/",
+        note: "Create a key through the OVHcloud AI Endpoints catalog. OpenCode prices all its models above $0 today.",
+    },
+    Connectable {
+        id: "ollama-cloud",
+        name: "Ollama Cloud",
+        models: "No models priced $0 in OpenCode's catalog today",
+        key_page: "https://ollama.com/settings/keys",
+        note: "Create a key in your Ollama account. OpenCode prices all Ollama Cloud models above $0 today; local Ollama is free.",
+    },
+    Connectable {
+        id: "chutes",
+        name: "Chutes",
+        models: "No models priced $0 in OpenCode's catalog today",
+        key_page: "https://chutes.ai/",
+        note: "Create an account and API key at Chutes. OpenCode prices all its models above $0 today.",
+    },
+    Connectable {
+        id: "xai",
+        name: "xAI",
+        models: "No models priced $0 in OpenCode's catalog today",
+        key_page: "https://console.x.ai/",
+        note: "xAI's free credits are not a $0 price in OpenCode's catalog, so connecting adds no models today.",
+    },
+    Connectable {
+        id: "siliconflow",
+        name: "SiliconFlow",
+        models: "No models priced $0 in OpenCode's catalog today",
+        key_page: "https://cloud.siliconflow.cn/account/ak",
+        note: "Create an API key in the SiliconFlow console. OpenCode prices all its models above $0 today.",
+    },
 ];
 
 pub fn find(id: &str) -> Option<&'static Connectable> {
@@ -262,6 +339,21 @@ mod tests {
             assert!(provider.key_page.starts_with("https://"), "{}", provider.id);
         }
         assert!(find("modelscope").is_some());
+        for id in [
+            "kilo",
+            "agnes",
+            "cohere",
+            "groq",
+            "mistral",
+            "cloudflare-workers-ai",
+            "ovhcloud",
+            "ollama-cloud",
+            "chutes",
+            "xai",
+            "siliconflow",
+        ] {
+            assert!(find(id).is_some(), "{id}");
+        }
     }
 
     #[test]

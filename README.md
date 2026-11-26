@@ -7,7 +7,7 @@ A desktop app for [OpenCode](https://opencode.ai), the open-source coding agent,
 ## What it does
 
 - Runs OpenCode in your project folder and shows each step as it happens: what it is reading, running, or editing, and how long each step took.
-- Offers only models priced at $0: OpenCode's own free models, OpenRouter's `:free` models, the free models of NVIDIA NIM, ModelScope, Z.ai, Google AI Studio, and Hugging Face once you add a free key, and models running on your computer in Ollama, LM Studio, or vLLM. Any other model is refused before it runs.
+- Offers only models priced at $0: OpenCode's own free models, OpenRouter's `:free` models, the free models of NVIDIA NIM, ModelScope, Z.ai, Google AI Studio, Hugging Face, Kilo Code, Agnes AI, and Cohere once you add a free key, and models running on your computer in Ollama, LM Studio, or vLLM. Any other model is refused before it runs.
 - Lets you choose the model yourself, or turn on Auto to have a quick, everyday, or hard model picked for each task. Each reply says which model ran and why.
 - Runs several sessions at once, in any projects. While a task runs, you can send it another message or queue the next task.
 - Opens a pane beside the conversation with OpenCode's to-do list, a terminal, the project's Git changes, a browser with tabs, and the project's files.
@@ -59,6 +59,8 @@ Models, attachments, voice, the side pane, usage, settings, and the command line
 ## Credits
 
 Made by [desmondknunoo](https://github.com/desmondknunoo). Built on [OpenCode](https://opencode.ai).
+
+Free API keys and providers are also catalogued by [awesome-free-llm-apis](https://github.com/open-free-llm-api/awesome-freellm-apis).
 
 ## License
 

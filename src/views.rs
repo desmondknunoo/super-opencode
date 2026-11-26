@@ -1569,6 +1569,20 @@ impl App {
             })
             .inner;
         link.on_hover_text("github.com/desmondknunoo");
+        ui.add_space(18.0);
+        setting(
+            ui,
+            palette,
+            "Free model directory",
+            "A wider catalogue of free LLM APIs and keys than OpenCode supports.",
+        );
+        let link = ui.hyperlink_to(
+            RichText::new("awesome-free-llm-apis")
+                .font(theme::strong(theme::TEXT))
+                .color(palette.accent),
+            "https://github.com/open-free-llm-api/awesome-freellm-apis",
+        );
+        link.on_hover_text("github.com/open-free-llm-api/awesome-freellm-apis");
     }
 
     /// One of Auto's tiers: its model and, where the model offers them, its effort level.

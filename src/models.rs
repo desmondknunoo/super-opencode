@@ -73,6 +73,9 @@ fn billed_elsewhere(provider: &str) -> bool {
 const SKIPPED: &[&str] = &[
     // 1.7B parameters is too small for agent work that reads, edits, and runs code.
     "openrouter/liquid/lfm-3-1.7b:free",
+    "kilo/liquid/lfm-3-1.7b:free",
+    // Kilo's Auto Router shows $0 but can choose a paid model behind it, like OpenRouter's.
+    "kilo/openrouter/auto",
 ];
 
 struct Seed(
@@ -289,6 +292,17 @@ pub fn provider_name(provider: &str) -> String {
         "zhipuai" => "Zhipu AI",
         "google" => "Google AI Studio",
         "huggingface" => "Hugging Face",
+        "kilo" => "Kilo Code",
+        "agnes" => "Agnes AI",
+        "cohere" => "Cohere",
+        "groq" => "Groq",
+        "mistral" => "Mistral",
+        "cloudflare-workers-ai" => "Cloudflare Workers AI",
+        "ovhcloud" => "OVHcloud",
+        "ollama-cloud" => "Ollama Cloud",
+        "chutes" => "Chutes",
+        "xai" => "xAI",
+        "siliconflow" => "SiliconFlow",
         "ollama" => "Ollama",
         "lmstudio" => "LM Studio",
         "vllm" => "vLLM",
@@ -565,6 +579,11 @@ mod tests {
             entry("openrouter", "liquid/lfm-3-1.7b:free", 0.0, true, &["text"]),
             entry("openrouter", "openrouter/auto", 0.0, true, &["text"]),
             entry("openrouter", "openrouter/free", 0.0, true, &["text"]),
+            entry("kilo", "openrouter/auto", 0.0, true, &["text"]),
+            entry("kilo", "liquid/lfm-3-1.7b:free", 0.0, true, &["text"]),
+            entry("kilo", "reflection/beam-free", 0.0, true, &["text"]),
+            entry("agnes", "agnes-3.0-flash", 0.0, true, &["text", "image/png"]),
+            entry("cohere", "north-mini-code-1-0", 0.0, true, &["text"]),
             entry("opencode", "glm-5.3-flash-free", 0.0, true, &["text", "image/png", "image/jpeg", "video/mp4"]),
         ]})
         .to_string();
@@ -576,13 +595,17 @@ mod tests {
                 "nvidia/z-ai/glm-5.3-flash",
                 "modelscope/Qwen/Qwen3-Coder-30B-A3B-Instruct",
                 "ollama/qwen3:8b",
+                "kilo/reflection/beam-free",
+                "agnes/agnes-3.0-flash",
+                "cohere/north-mini-code-1-0",
                 "opencode/glm-5.3-flash-free",
             ]
         );
         assert_eq!(offered[0].name, "z-ai/glm-5.3-flash");
         assert_eq!(offered[0].images, WEB_IMAGES);
-        assert_eq!(offered[3].images, OPENCODE_IMAGES);
-        assert_eq!(offered[3].video, VIDEO);
+        let built_in = offered.last().unwrap();
+        assert_eq!(built_in.images, OPENCODE_IMAGES);
+        assert_eq!(built_in.video, VIDEO);
         assert_eq!(offered[0].variants, ["low", "xhigh"]);
         assert_eq!(effort_label("xhigh"), "Extra high");
         assert_eq!(effort_label("high"), "High");
